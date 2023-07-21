@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <style>
+        table {
+            width: 100%;
+            background: darkgreen;
+            color: white;
+            border-spacing: 3px;
+        }
+
+        td, th {
+            background: mediumslateblue;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<div th:if="${alluser!=null}">
+    <table border="1">
+        <tr>
+            <th>Userid</th>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>address</th>
+        </tr>
+        <tr th:each="user : ${alluser}">
+            <th><span th:text="${user.getUserId()}"></span></th>
+            <th><span th:text="${user.getUsername()}"></span></th>
+            <th><span th:text="${user.getName()}"></span></th>
+            <th><span th:text="${user.getSurname()}"></span></th>
+            <th><span th:text="${user.getAddress()}"></span></th>
+            <th><a href="#" th:href="@{/user/edit/{id}(id=${user.getUserId()})}"
+                   onclick="confirmEdit(event)">Edit</a></th>
+            <th><a href="#" th:href="@{/user/delete/{id}(id=${user.getUserId()})}"
+                   onclick="confirmDelete(event)">Delete</a></th>
+
+        </tr>
+    </table>
+    <a href="/user/userinfo/add">Add User</a>
+
+    <script>
+        function confirmDelete(event) {
+            if (!confirm("Вы уверены, что хотите удалить?")) {
+                event.preventDefault();
+            }
+        }
+    </script>
+    <script>
+        function confirmEdit(event) {
+            if (!confirm("Вы уверены,что хотите изменить пользователя?")) {
+                event.preventDefault();
+            }
+        }
+    </script>
+</div>
+</body>
+</html>

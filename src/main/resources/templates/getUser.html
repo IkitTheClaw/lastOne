@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User#</title>
+    <style>
+        table{
+            width:100%;
+            background:darkgreen;
+            color:white;
+            border-spacing: 3px;
+        }
+        td,th {
+            background: mediumslateblue;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+<h1>User Info </h1>
+<div th:if="${user!=null}">
+    <table border="1">
+        <tr>
+            <th> UserId </th>
+            <th><span th:text="${user.getUserId()}"></span></th>
+        </tr>
+        <tr>
+            <th> Username </th>
+            <th><span th:text="${user.getUsername()}"></span>></th>
+        </tr>
+        <tr>
+            <th> Name </th>
+            <th><span th:text="${user.getName()}"></span></th>
+        </tr>
+        <tr>
+            <th> Surname </th>
+            <th><span th:text="${user.getSurname()}"></span></th>
+        </tr>
+        <tr>
+            <th> address </th>
+            <th><span th:text="${user.getAddress()}"></span></th>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
