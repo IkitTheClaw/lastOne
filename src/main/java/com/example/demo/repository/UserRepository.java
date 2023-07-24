@@ -7,16 +7,16 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends CrudRepository<User,Long> {
-        User findUserByUserId(Long userId);
-        User findUserByUsername(String username);
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findUserByUserId(Long userId);
 
-        List<User> findAll();
+    User findUserByUsername(String username);
 
-        User save(User user);
+    List<User> findAll();
 
-        void deleteUserByUserId(long id);
+    User save(User user);
 
+    void deleteUserByUserId(long id);
 
 
 }

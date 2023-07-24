@@ -66,7 +66,6 @@ public class UserController {
         userService.deleteUserByUserid(id);
         return "redirect:/";
     }
-
 }
 
 
