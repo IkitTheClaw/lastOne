@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     User getUserById(Long id);
 

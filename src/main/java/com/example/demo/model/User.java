@@ -9,7 +9,6 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Data
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,12 +20,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long userId;
+    @Column(unique = true, nullable = false)
     private String username;
     private String name;
     private String surname;
     private String address;
     private String password;
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @Override

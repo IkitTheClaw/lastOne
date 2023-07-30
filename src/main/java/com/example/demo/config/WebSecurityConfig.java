@@ -2,28 +2,28 @@ package com.example.demo.config;
 
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.authentication.configurers.userdetails.DaoAuthenticationConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    private final UserService userService;
+    private final UserDetailsService userDetailsService;
 
     @Autowired
-    public WebSecurityConfig(UserService userService) {
-        this.userService = userService;
+    public WebSecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
 
 
@@ -31,8 +31,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/getAllUser", "/getUser", "/index", "/user").permitAll()
-                        .requestMatchers("/add","/edit","/delete").hasRole("ADMIN")
+                        .requestMatchers("/registration", "/", "/index","/login").permitAll()
+                        .requestMatchers("/user/userinfo/**").hasRole("USER")
+                        .requestMatchers("/user/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -48,12 +49,13 @@ public class WebSecurityConfig {
     public DaoAuthenticationProvider daoAuthenticationConfigurer() {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
         return daoAuthenticationProvider;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return userService;
+        return userDetailsService;
     }
 
     @Bean
@@ -66,6 +68,17 @@ public class WebSecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
+
+
+/* 1. Что такое Spring Security?
+2. Какие есть способы авторизации в Spring Security?
+3. Какие есть способы аутентификации в Spring Security?
+4. Что такое UserDetails и UserDetailsService?
+5. Что такое GrantedAuthority?
+6. Что такое AuthenticationManager?
+7. Что такое AuthenticationProvider? */
+
+
 //Класс WebSecurityConfig содержит аннотацию @EnableWebMvcSecurity для включения поддержки безопасности Spring Security и Spring MVC интеграцию.
 // Он также расширяет WebSecurityConfigurerAdapter и переопределяет пару методов для установки некоторых настроек безопасности.
 //Метод securityFilterChain(HttpSecurity) определяет, какие URL пути должны быть защищены, а какие нет. В частности, "/" и "/home" настроены без требования к авторизации.
