@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.UserService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.model.User;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 
@@ -69,15 +71,23 @@ public class UserController {
 
     @PostMapping("/save")
     public String addUser(@ModelAttribute("user") UserDto userDto) {
+        logger.info("addUser <-- " + userDto);
         User user = User.builder()
                 .username(userDto.getUsername())
                 .name(userDto.getName())
                 .surname(userDto.getSurname())
                 .address(userDto.getAddress())
                 .password(userDto.getPassword())
-                .roles(userDto.getRoles().stream().map(roleName -> roleService.findByName(roleName).orElseThrow()).collect(Collectors.toSet()))
         .build();
+        Set<Role> roles = userDto.getRoles()
+                .stream()
+                .map(roleName -> roleService.findByName(roleName).orElseThrow())
+                .peek(System.out::println)
+                .collect(Collectors.toSet());
+        logger.info("addUser --> Roles:" + roles.stream().map(it -> it.toString()).collect(Collectors.joining(", ")));
+        user.setRoles(roles);
         userService.save(user);
+        logger.info("addUser --> " + user);
         return "redirect:/";
     }
 

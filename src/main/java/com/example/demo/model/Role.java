@@ -19,11 +19,15 @@ public class Role implements GrantedAuthority {
     private Long id;
     @Column(unique = true,nullable = false)
     private String name;
-    @ManyToMany
+    @ManyToMany(mappedBy = "roles",fetch = FetchType.EAGER)
     private List<User> users;
 
     @Override
     public String getAuthority() {
+        return name;
+    }
+@Override
+    public String toString() {
         return name;
     }
 

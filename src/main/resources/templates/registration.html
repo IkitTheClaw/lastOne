@@ -7,27 +7,12 @@
 </head>
 <body>
 <h1>Регистрация</h1>
-<form action="@{/user/save}" method="post">
-    <br>
-    <label for="username">Username:</label>
-    <input name="username" id="username" type="text" /></br>
-    <label for="name">Name:</label>
-    <input name="name" id="name" type="text" /><br>
-    <label for="surname">Surname:</label>
-    <input name="surname" id="surname" type="text" ></br>
-    <label for="address">Address:</label>
-    <input name="address" id="address" type="text" ></br>
-    <label for="password">Password:</label>
-    <input name="password" id="password" type="password">
-    <br>
-    <label for="role_user">USER:</label>
-    <input name="roles[]" id="role_user" type="checkbox" value="ROLE_USER">
-    <br>
-    <label for="role_admin">ADMIN:</label>
-    <input name="roles[]" id="role_admin" type="checkbox" value="ROLE_ADMIN">
-    <br>
-    <button
-            type="submit"> Save</button>
+<form th:action="@{/registration}" th:object="${user}" method="post">
+    <label>Имя пользователя:</label>
+    <input type="text" th:field="*{username}" required/><br/>
+    <label>Пароль:</label>
+    <input type="text" th:field="*{password}" required/><br/>
+    <button type="submit">Зарегистрироваться</button>
 </form>
 </body>
 </html>

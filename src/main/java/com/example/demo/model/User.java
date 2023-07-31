@@ -14,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Data
 
 public class User implements UserDetails {
     @Id
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     private String surname;
     private String address;
     private String password;
-    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
     @Override
