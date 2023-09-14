@@ -1,8 +1,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
-  <title>Spring Security Example </title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <base href="login">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tulpen+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
+  <form th:action="@{/login}" method="post">
+    <div class="form-group">
+      <label for="exampleInputUsername">Email address</label>
+      <input type="text" name="username" class="form-control" id="exampleInputUsername" aria-describedby="UsernameHelp" placeholder="Enter Username">
+      <small id="usernameHelp" class="form-text text-muted">We'll never share your Username with anyone else.</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+
+    <button type="submit" class="btn btn-primary"  >Sign in</button>
+  </form>
+
+  <title>Spring Security Example </title>
+
 <body>
 <div th:if="${param.error}">
   Invalid username and password.
@@ -10,13 +35,13 @@
 <div th:if="${param.logout}">
   You have been logged out.
 </div>
-<form th:action="@{/login}" method="post">
-  <div><label> User Name : <input type="text" name="username"/> </label></div>
-  <div><label> Password: <input type="password" name="password"/> </label></div>
-  <div><input type="submit" value="Sign In"/></div>
-</form>
+
 <form th:action="@{/registration}" method="get">
   <div><input type="submit" value="Registration"></div>
 </form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 </body>
 </html>

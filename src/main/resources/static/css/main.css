@@ -1,0 +1,35 @@
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Roboto',sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    background-color: aliceblue;
+    min-width: 320px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+section {
+    padding: 50px 0;
+}
+
+a {
+    color:floralwhite ;
+}
+
+a:hover {
+    color: coral;
+}
+
+.navbar-nav .nav-link {
+    color: brown;
+    font-weight: bold;
+    text-transform: uppercase;
+}

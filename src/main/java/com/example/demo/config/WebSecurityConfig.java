@@ -11,6 +11,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,7 +34,11 @@ public class WebSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .anyRequest().permitAll()
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/registration","/login").anonymous()
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/user/**").authenticated()
+                        .anyRequest().hasRole("ADMIN")
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
@@ -86,3 +91,7 @@ public class WebSecurityConfig {
 // Здесь вы определили собственную "/login" страницу в loginPage() и каждый имеет доступ к ней.
 //Что касается метода configure(AuthenticationManagerBuilder), то он создает в памяти хранилище пользователей с единственным пользователем.
 // Этому пользователю дано имя "user", пароль "password" и роль "ROLE".
+
+
+//
+//
